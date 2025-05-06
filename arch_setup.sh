@@ -3,6 +3,22 @@
 # Update the system
 sudo pacman -Syu --noconfirm
 
+# Install and activate OpenSSH
+echo "Installing OpenSSH..."
+sudo pacman -S --noconfirm openssh
+
+# Improve security
+echo "Disabling login as root and password authentication..."
+sudo mkdir -p /etc/ssh/sshd_config.d/
+echo "PermitRootLogin no" | sudo tee /etc/ssh/sshd_config.d/20-deny_root.conf
+echo "PasswordAuthentication no" | sudo tee -a /etc/ssh/sshd_config.d/20-force_publickey_auth.conf
+echo "AuthenticationMethods publickey" | sudo tee -a /etc/ssh/sshd_config.d/20-force_publickey_auth.conf
+echo "Enabling and starting sshd service..."
+sudo systemctl enable sshd.service
+sudo systemctl start sshd.service
+
+echo "OpenSSH installed and sshd service activated."
+
 # Install Firefox and extensions
 echo "Installing Firefox and extensions..."
 sudo pacman -S --noconfirm firefox firefox-ublock-origin firefox-decentraleyes
