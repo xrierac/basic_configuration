@@ -55,13 +55,14 @@ read -p "Do you want to install Hyprland? (y/N): " install_choice
 
 if [[ "$install_choice" =~ ^[Yy]$ ]]; then
     echo "Installing Hyprland and required tools..."
-    sudo pacman -S --noconfirm hyprland hyprsunset uwsm kitty waybar hyprpolkitagent wofi libnewt
+    sudo pacman -S --noconfirm hyprland hyprsunset uwsm kitty waybar \
+        hyprpolkitagent wofi libnewt otf-font-awesome
     mkdir -p /home/$USER/.config/waybar
     cp /etc/xdg/waybar/* /home/$USER/.config/waybar/
     systemctl --user enable --now waybar.service
-    cat << 'EOF' >> ~/.zshrc
-if uwsm check may-start && uwsm select; then
-    exec uwsm start default
+    cat << 'EOF' >> ~/.bash_profile
+if uwsm check may-start; then
+    exec uwsm start hyprland.desktop
 fi
 EOF
 else
