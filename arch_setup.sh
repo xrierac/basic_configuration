@@ -4,10 +4,10 @@
 sudo pacman -Syu --noconfirm
 
 # Install zsh and make it the default shell
-echo "Installing zsh and making it the default shell..."
-sudo pacman -S --noconfirm zsh zsh-completions
-zsh
-chsh -s /usr/bin/zsh
+#echo "Installing zsh and making it the default shell..."
+#sudo pacman -S --noconfirm zsh zsh-completions
+#zsh
+#chsh -s /usr/bin/zsh
 
 # Install and activate OpenSSH
 echo "Installing OpenSSH..."
