@@ -3,6 +3,12 @@
 # Update the system
 sudo pacman -Syu --noconfirm
 
+# Install zsh and make it the default shell
+echo "Installing zsh and making it the default shell..."
+sudo pacman -S --noconfirm zsh zsh-completions
+zsh
+chsh -s /usr/bin/zsh
+
 # Install and activate OpenSSH
 echo "Installing OpenSSH..."
 sudo pacman -S --noconfirm openssh
@@ -48,6 +54,11 @@ if [[ "$install_choice" =~ ^[Yy]$ ]]; then
     sudo pacman -S --noconfirm hyprland hyprsunset uwsm kitty waybar hyprpolkitagent wofi
     cp /etc/xdg/waybar/* /home/$USER/.config/waybar/
     systemctl --user enable --now waybar.service
+    cat << 'EOF' >> ~/.zshrc
+if uwsm check may-start && uwsm select; then
+    exec uwsm start default
+fi
+EOF
 else
     echo "Skipping installation of Hyprland, UWSM, Kitty, and Waybar."
 fi
